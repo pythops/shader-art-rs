@@ -1,5 +1,5 @@
-use shader_art_rs::run;
+use shader_art_rs::ui;
 
 fn main() {
-    pollster::block_on(run());
+    pollster::block_on(ui::render());
 }
