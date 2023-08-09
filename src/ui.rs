@@ -20,7 +20,7 @@ pub async fn render(speed: u8) {
                 Ok(_) => {}
                 Err(wgpu::SurfaceError::Lost) => {
                     let size = app.surface.as_ref().unwrap().surface_size;
-                    app.resize(size.clone());
+                    app.resize(size);
                 }
                 Err(wgpu::SurfaceError::OutOfMemory) => *control_flow = ControlFlow::Exit,
                 Err(e) => eprintln!("{:?}", e),
