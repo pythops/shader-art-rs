@@ -16,7 +16,6 @@ pub struct Pipeline {
 pub struct Common {
     dimensions: [f32; 2],
     pub time: f32,
-    padding: f32,
     speed: f32,
 }
 
@@ -25,7 +24,6 @@ impl Common {
         Self {
             dimensions: dims,
             time: 1.0,
-            padding: 0.0,
             speed: speed.into(),
         }
     }
