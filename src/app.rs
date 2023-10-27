@@ -28,6 +28,8 @@ impl App {
         let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
             backends: wgpu::Backends::all(),
             dx12_shader_compiler: Default::default(),
+            flags: Default::default(),
+            gles_minor_version: Default::default(),
         });
 
         let adapter = instance
@@ -86,6 +88,8 @@ impl App {
         let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
             backends: wgpu::Backends::all(),
             dx12_shader_compiler: Default::default(),
+            flags: Default::default(),
+            gles_minor_version: Default::default(),
         });
 
         let surface = unsafe { instance.create_surface(&window) }.unwrap();
@@ -221,10 +225,12 @@ impl App {
                             b: 0.0,
                             a: 1.0,
                         }),
-                        store: true,
+                        store: wgpu::StoreOp::Store,
                     },
                 })],
                 depth_stencil_attachment: None,
+                timestamp_writes: None,
+                occlusion_query_set: None,
             });
 
             render_pass.set_pipeline(&self.pipeline.render_pipeline);
@@ -285,10 +291,12 @@ impl App {
                             b: 0.0,
                             a: 1.0,
                         }),
-                        store: true,
+                        store: wgpu::StoreOp::Store,
                     },
                 })],
                 depth_stencil_attachment: None,
+                timestamp_writes: None,
+                occlusion_query_set: None,
             };
             let mut render_pass = encoder.begin_render_pass(&render_pass_desc);
 
