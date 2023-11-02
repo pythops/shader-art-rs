@@ -1,14 +1,9 @@
 <div align="center">
-<h1 align="center">
     <h1>✨ Shader art using webgpu  ✨</h1>
     <img src="https://github.com/pythops/shader-art-rs/assets/57548585/cbfbc6a4-1bd6-443d-b61d-0a9f3d72b561"/>
 </div>
 
 This is the implementation of [An introduction to Shader Art Coding ](https://www.youtube.com/watch?v=f4s1h2YETNY) in Rust using webgpu.
-
-<p align="center">
-  <img src="assets/demo.gif" alt="demo" />
-</p>
 
 ## 🔌 Setup
 
