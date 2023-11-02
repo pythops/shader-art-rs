@@ -7,24 +7,24 @@ pub struct TextureSize {
     pub width: u32,
 }
 
-pub struct Surface {
-    window: Window,
+pub struct Surface<'a> {
+    window: &'a Window,
     surface: wgpu::Surface,
     surface_config: wgpu::SurfaceConfiguration,
     pub surface_size: winit::dpi::PhysicalSize<u32>,
 }
 
-pub struct App {
+pub struct App<'a> {
     device: wgpu::Device,
     queue: wgpu::Queue,
-    pub surface: Option<Surface>,
+    pub surface: Option<Surface<'a>>,
     pub pipeline: Pipeline,
     pub output_buffer: Option<wgpu::Buffer>,
     pub texture_size: Option<TextureSize>,
 }
 
-impl App {
-    pub async fn new_without_window(speed: u8, resolution: [u16; 2]) -> Self {
+impl<'a> App<'a> {
+    pub async fn new_without_window(speed: u8, resolution: [u16; 2]) -> App<'a> {
         let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
             backends: wgpu::Backends::all(),
             dx12_shader_compiler: Default::default(),
@@ -82,7 +82,7 @@ impl App {
         }
     }
 
-    pub async fn new_with_window(window: Window, speed: u8) -> Self {
+    pub async fn new_with_window(window: &'a Window, speed: u8) -> App<'a> {
         let size = window.inner_size();
 
         let instance = wgpu::Instance::new(wgpu::InstanceDescriptor {
@@ -92,7 +92,7 @@ impl App {
             gles_minor_version: Default::default(),
         });
 
-        let surface = unsafe { instance.create_surface(&window) }.unwrap();
+        let surface = unsafe { instance.create_surface(window) }.unwrap();
 
         let adapter = instance
             .request_adapter(&wgpu::RequestAdapterOptions {
@@ -169,7 +169,7 @@ impl App {
     }
 
     pub fn window(&self) -> &Window {
-        &self.surface.as_ref().unwrap().window
+        self.surface.as_ref().unwrap().window
     }
 
     pub fn resize(&mut self, new_size: winit::dpi::PhysicalSize<u32>) {
@@ -360,3 +360,4 @@ impl App {
         }
     }
 }
+
