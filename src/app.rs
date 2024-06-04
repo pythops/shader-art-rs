@@ -9,7 +9,7 @@ pub struct TextureSize {
 
 pub struct Surface<'a> {
     window: &'a Window,
-    surface: wgpu::Surface,
+    surface: wgpu::Surface<'a>,
     surface_config: wgpu::SurfaceConfiguration,
     pub surface_size: winit::dpi::PhysicalSize<u32>,
 }
@@ -92,7 +92,7 @@ impl<'a> App<'a> {
             gles_minor_version: Default::default(),
         });
 
-        let surface = unsafe { instance.create_surface(window) }.unwrap();
+        let surface = instance.create_surface(window).unwrap();
 
         let adapter = instance
             .request_adapter(&wgpu::RequestAdapterOptions {
@@ -106,8 +106,8 @@ impl<'a> App<'a> {
         let (device, queue) = adapter
             .request_device(
                 &wgpu::DeviceDescriptor {
-                    features: wgpu::Features::empty(),
-                    limits: wgpu::Limits::default(),
+                    required_features: wgpu::Features::empty(),
+                    required_limits: wgpu::Limits::default(),
                     label: None,
                 },
                 None,
@@ -131,6 +131,7 @@ impl<'a> App<'a> {
             present_mode: surface_caps.present_modes[0],
             alpha_mode: surface_caps.alpha_modes[0],
             view_formats: vec![],
+            desired_maximum_frame_latency: 2,
         };
 
         surface.configure(&device, &surface_config);

@@ -1,5 +1,5 @@
 use crate::vertex::{Vertex, INDICES, VERTICES};
-use wgpu::util::DeviceExt;
+use wgpu::{util::DeviceExt, PipelineCompilationOptions};
 
 pub struct Pipeline {
     pub render_pipeline: wgpu::RenderPipeline,
@@ -111,6 +111,7 @@ impl Pipeline {
                 module: &shader,
                 entry_point: "vs_main",
                 buffers: &[Vertex::desc()],
+                compilation_options: PipelineCompilationOptions::default(),
             },
             fragment: Some(wgpu::FragmentState {
                 module: &shader,
@@ -120,6 +121,7 @@ impl Pipeline {
                     blend: Some(wgpu::BlendState::REPLACE),
                     write_mask: wgpu::ColorWrites::ALL,
                 })],
+                compilation_options: PipelineCompilationOptions::default(),
             }),
             primitive: wgpu::PrimitiveState {
                 topology: wgpu::PrimitiveTopology::TriangleList,
