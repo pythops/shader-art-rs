@@ -1,4 +1,5 @@
 use crate::pipeline::Pipeline;
+use wgpu::MemoryHints;
 use winit::window::Window;
 
 #[derive(Clone)]
@@ -109,6 +110,7 @@ impl<'a> App<'a> {
                     required_features: wgpu::Features::empty(),
                     required_limits: wgpu::Limits::default(),
                     label: None,
+                    memory_hints: MemoryHints::default(),
                 },
                 None,
             )
